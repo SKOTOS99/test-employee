@@ -2,7 +2,10 @@ package com.upax.app.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;  
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +39,20 @@ public class IEMployeeServiceImp implements IEmployeeService{
 	@Override
 	public Map<String, ?> add_Employee(EmployeeRequest employee) {
 		Map<String,Object > listParams = new HashMap<String,Object >();
+	    Date date1=null;
+		try {
+			date1 = new SimpleDateFormat("dd/MM/yyyy").parse(employee.getBirthdate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
 		Date fecha = new Date();
 		Gender gender = genDao.findById(employee.getGender_id()).orElse(null);
 		Jobs job = jobDao.findById(employee.getJob_id()).orElse(null);
 		if(gender!=null) {
 			if(job!=null) {
 				
-				Employee employe =new Employee(gender, job, employee.getName(), employee.getLast_name(), employee.getBirthdate());
+				Employee employe =new Employee(gender, job, employee.getName(), employee.getLast_name(),date1 );
 				empDao.save(employe);
 				
 			}else {
@@ -54,11 +64,7 @@ public class IEMployeeServiceImp implements IEmployeeService{
 		}
 		
 		
-		int edad = (employee.getBirthdate().getYear() - fecha.getYear());
-		if(edad>=18) {
-			System.out.println("es mayor de edad");
-			
-		}
+		
 		return listParams;
 	}
 
@@ -93,6 +99,52 @@ public class IEMployeeServiceImp implements IEmployeeService{
 		}else {
 			listParams.put("message", "No existe el usuario");
 		}
+		return listParams;
+	}
+
+	@Override
+	public Map<String, ?> get_Employee() {
+		// TODO Auto-generated method stub
+		Map<String,Object > listParams = new HashMap<String,Object >();
+		
+		List<Employee> employees = (List<Employee>) empDao.findAll();
+		if(employees.size()!=0) {
+			listParams.put("OK", employees);
+		}else{
+			listParams.put("error", "donst users");
+		}
+		return listParams;
+	}
+
+	@Override
+	public Map<String, ?> get_hours(Long id) {
+		// TODO Auto-generated method stub
+		
+		Map<String,Object > listParams = new HashMap<String,Object >();
+		List<EmployeeWorkedHours> hours = employeWorkedDao.getWorkedHousrById(id);
+		int hoursWorked = 0;
+		if(hours.size()!=0) {
+			int total = 0;
+			for(EmployeeWorkedHours work: hours) {
+				total = total+ work.getWorked_hours();
+				
+			}
+			hoursWorked = total;
+			listParams.put("worked hours ", total);
+		}
+		Employee employee = empDao.findById(id).orElse(null);
+		int salary = employee.getJob_id().getSalary();
+		listParams.put("salary by hours ", salary/hoursWorked);
+		
+		return listParams;
+	}
+
+	@Override
+	public Map<String, ?> get_salary_by_hours(Long id) {
+		// TODO Auto-generated method stub
+		Map<String,Object > listParams = new HashMap<String,Object >();
+		
+		
 		return listParams;
 	}
 

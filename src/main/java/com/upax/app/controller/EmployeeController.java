@@ -5,6 +5,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,13 @@ public class EmployeeController {
 		
 		return empService.add_Employee(emp);
 	}
+	@GetMapping("/employee")
+	@ApiOperation(value = "get employee to db")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Map<String, ?> get_empleados(){
+		
+		return empService.get_Employee();
+	}
 	
 	@PostMapping("/job")
 	@ApiOperation(value = "add job to db")
@@ -60,6 +69,24 @@ public class EmployeeController {
 		
 		return empService.add_employeWorked(employeHours);
 	}
+	
+	@GetMapping("/employeeWorkedHours/{id}")
+	@ApiOperation(value = "get worked hours")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Map<String, ?> get_hours(@PathVariable Long id){
+		
+		return empService.get_hours(id);
+	}
+	
+	@GetMapping("/salaryByHours/{id}")
+	@ApiOperation(value = "get salary by hours")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Map<String, ?> get_salary_by_hours(@PathVariable Long id){
+		
+		return empService.get_salary_by_hours(id);
+	}
+	
+	
 
 
 }

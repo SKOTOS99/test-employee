@@ -7,6 +7,8 @@ import com.upax.app.entity.Jobs;
 
 public interface IJobDao extends CrudRepository<Jobs,Long>{
 	
+
+	
 	
 
 }

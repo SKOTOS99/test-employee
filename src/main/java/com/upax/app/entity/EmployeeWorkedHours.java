@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "EMPLOYEE_WORKED_HOURS")
+@Table(name = "employe_worked_hours")
 public class EmployeeWorkedHours {
 	
 	@Id
@@ -32,6 +32,8 @@ public class EmployeeWorkedHours {
 	
 	@Column(name="worked_date")
 	private Date worked_date;
+	
+	public EmployeeWorkedHours() {}
 
 	public EmployeeWorkedHours(Employee id_employee, Integer worked_hours, Date worked_date) {
 		super();

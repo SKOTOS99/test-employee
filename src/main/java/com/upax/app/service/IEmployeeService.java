@@ -1,5 +1,6 @@
 package com.upax.app.service;
 
+import java.text.ParseException;
 import java.util.Map;
 
 import com.upax.app.entity.EmployeeWorkedHours;
@@ -12,8 +13,11 @@ public interface IEmployeeService {
 	
 	
 	public Map<String,?> add_Employee(EmployeeRequest employee);
+	public Map<String,?> get_Employee( );
 	public Map<String,?> add_job(Jobs job);
 	public Map<String,?> add_gender(Gender gender);
 	public Map<String, ?> add_employeWorked(EmployeWorkedHoursEntity employeeHours);
+	public Map<String,?> get_hours(Long id);
+	public Map<String,?> get_salary_by_hours(Long id);
 
 }

@@ -44,6 +44,9 @@ public class Employee {
 	
 	@Column(name="birthdate")
 	private Date birthdate;
+	
+	
+	public Employee() {}
 
 	public Employee(Gender gender_id, Jobs job_id, String name, String last_name, Date birthdate) {
 		super();

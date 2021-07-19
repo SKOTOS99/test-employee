@@ -11,6 +11,6 @@ public class EmployeeRequest {
 	private Long job_id;
 	private Long gender_id;
 	private String last_name;
-	private Date birthdate;
+	private String birthdate;
 
 }
